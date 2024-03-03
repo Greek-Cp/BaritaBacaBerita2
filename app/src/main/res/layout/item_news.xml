@@ -3,28 +3,70 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/id_category_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        android:layout_margin="8dp"
+        app:strokeColor="@color/material_on_surface_stroke"
+        app:strokeWidth="1dp">
 
-        <TextView
-            android:id="@+id/textViewTitle"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:text="Judul Berita" />
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/textViewDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textSize="14sp"
-            tools:text="Deskripsi singkat dari berita..." />
+            <TextView
+                android:id="@+id/id_tv_judul_berita"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/soft_black"
+                app:layout_constraintEnd_toStartOf="@+id/id_img_berita"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Judul berita" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/id_content_berita"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/light_grey"
+                app:layout_constraintEnd_toStartOf="@+id/id_img_berita"
+                app:layout_constraintStart_toStartOf="@+id/id_tv_judul_berita"
+                app:layout_constraintTop_toBottomOf="@+id/id_tv_judul_berita"
+                tools:text="Partai Golkar membuka pintu lebar-lebar kepada Presiden Jokowi gabung..."
+                android:maxLength="76"
+                android:ellipsize="end"
+                />
+
+            <TextView
+                android:id="@+id/id_tanggal_berita"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+
+                android:textColor="@color/light_grey"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/id_content_berita"
+                app:layout_constraintVertical_bias="1.0"
+                tools:text="3 maret 2024" />
+
+            <ImageView
+                android:id="@+id/id_img_berita"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

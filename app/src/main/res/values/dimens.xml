@@ -1,3 +1,4 @@
 <resources>
       <dimen name="fab_margin">16dp</dimen>
-   </resources>
+    <dimen name="size_header_item_berita">24sp</dimen>
+</resources>

@@ -1,5 +1,6 @@
 package com.yanuar.barita.ui.home
 
+import NewsAdapter
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,10 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yanuar.barita.R
 import com.yanuar.barita.adapters.NewsCategoryAdapter
 import com.yanuar.barita.databinding.FragmentHomeBinding
+import com.yanuar.barita.network.RetrofitInstance
+import com.yanuar.barita.ui.viewmodel.NewsViewModel
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +42,8 @@ class HomeFragment : Fragment()  {
     }
     private var  _binding: FragmentHomeBinding? = null
     private val binding get()= _binding
+    private lateinit var viewModel: NewsViewModel
+    private lateinit var newsAdapter: NewsAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,13 +52,44 @@ class HomeFragment : Fragment()  {
         // Inflate the layout for this fragment
        binding?.idRecCategoryNews?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         val categories = listOf("Berita", "Olahraga", "Teknologi", "Hiburan") // Contoh kategori
+        binding?.idRecItemNews?.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
         val adapter = NewsCategoryAdapter(categories){item->
-            Toast.makeText(context, "Clicked $item", Toast.LENGTH_SHORT).show()
-
+            onListItemClick(item)
         }
         binding?.idRecCategoryNews?.adapter = adapter
+
         return binding?.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        fetchNews()
+    }
+    private fun setupRecyclerView() {
+        newsAdapter = NewsAdapter(listOf()){}
+        binding?.idRecItemNews?.layoutManager = LinearLayoutManager(context)
+        binding?.idRecItemNews?.adapter = newsAdapter
+    }
+
+    private fun fetchNews() {
+        lifecycleScope.launch {
+            try {
+                val newsResponse = RetrofitInstance.api.getLatestNews()
+                Log.d("response", newsResponse.message.toString());
+                if (newsResponse.success) {
+                    newsAdapter.updateNews(newsResponse.data.posts)
+                } else {
+                }
+            } catch (e: Exception) {
+                // Handle any errors that occur during the network request
+            }
+        }
+    }
+
+    fun onListItemClick( item: String) =
+        Toast.makeText(context, "Clicked $item", Toast.LENGTH_SHORT).show()
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
