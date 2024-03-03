@@ -1,14 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.about.AboutFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:padding="15dp"
+        tools:context=".ui.about.AboutFragment">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profilepic"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/foto_profile"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/CircleImageView" />
+        <TextView
+            android:id="@+id/id_tv_nama_akun"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/soft_black"
+            android:textSize="@dimen/size_header_item_berita"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/profilepic"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/name_about" />
+
+        <TextView
+            android:id="@+id/id_tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/light_grey"
+            android:textSize="@dimen/size_description_item_berita"
+            app:layout_constraintEnd_toEndOf="@+id/id_tv_nama_akun"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/profilepic"
+            app:layout_constraintTop_toBottomOf="@+id/id_tv_nama_akun"
+            android:text="agfoodserviceemail@gmail.com" />
+
+        <TextView
+            android:id="@+id/id_tv_jumlah_dibaca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingTop="20dp"
+            android:textColor="@color/soft_black"
+            android:textSize="@dimen/size_header_item_berita"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/id_total_berita_dibaca"
+            app:layout_constraintStart_toStartOf="@+id/id_total_berita_dibaca"
+            app:layout_constraintTop_toBottomOf="@+id/profilepic"
+            android:text="2" />
+
+        <TextView
+            android:id="@+id/id_total_berita_dibaca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/light_grey"
+            android:textSize="@dimen/size_description_item_berita"
+            app:layout_constraintEnd_toEndOf="@+id/id_tv_nama_akun"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/id_tv_jumlah_dibaca"
+            android:text="Berita\nDibaca" />
+
+        <TextView
+            android:id="@+id/id_tv_jumlah_berita_dibagikan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingTop="20dp"
+            android:text="2"
+            android:textColor="@color/soft_black"
+            android:textSize="@dimen/size_header_item_berita"
+            android:textStyle="bold"
+            android:textAlignment="center"
+
+            app:layout_constraintEnd_toEndOf="@+id/id_total_berita_dibagikan"
+            app:layout_constraintStart_toEndOf="@+id/id_total_berita_dibaca"
+            app:layout_constraintTop_toBottomOf="@+id/profilepic" />
+
+        <TextView
+            android:id="@+id/id_total_berita_dibagikan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="Berita\nDibagikan"
+            android:textColor="@color/light_grey"
+            android:textAlignment="center"
+
+            android:textSize="@dimen/size_description_item_berita"
+            app:layout_constraintStart_toEndOf="@+id/id_total_berita_dibaca"
+            app:layout_constraintTop_toBottomOf="@+id/id_tv_jumlah_berita_dibagikan" />
+
+        <TextView
+            android:id="@+id/id_tv_berita_disimpan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:textColor="@color/soft_black"
+            android:textSize="@dimen/size_header_item_berita"
+            android:textStyle="bold"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/id_total_berita_dibaca"
+            android:text="@string/berita_disimpan" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/id_rec_disimpan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/id_tv_berita_disimpan"
+            tools:itemCount="10"
+            tools:layout_editor_absoluteX="15dp"
+            android:layout_marginBottom="150dp"
+            android:paddingBottom="150dp"
+            tools:listitem="@layout/item_news" />
+        <!-- TODO: Update blank fragment layout -->
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

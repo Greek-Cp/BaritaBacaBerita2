@@ -16,10 +16,7 @@ class NewsCategoryAdapter(private val nameCategory: List<String>, private val on
         fun bind(item: String, isSelected: Boolean){
             val textView = itemView.findViewById<TextView>(R.id.categoryName)
             val cardView = itemView.findViewById<MaterialCardView>(R.id.id_category_card)
-
             textView.text = item
-
-            // Set the card background color based on the selection state
             if (isSelected) {
                 cardView.setCardBackgroundColor(itemView.context.getColor(R.color.black)) // Define selected_card_color in your colors.xml
                 textView.setTextColor(itemView.context.getColor(R.color.white)

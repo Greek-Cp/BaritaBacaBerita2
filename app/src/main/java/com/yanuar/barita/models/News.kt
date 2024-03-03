@@ -1,24 +1,28 @@
 package com.yanuar.barita.models
 
-data class NewsResponse(
-    val success: Boolean,
-    val message: String?,
-    val data: NewsData
-)
+import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 
-data class NewsData(
-    val link: String,
-    val description: String,
-    val title: String,
-    val image: String,
-    val posts: List<News>
-)
+typealias Root = List<News>
 
+@Parcelize
 data class News(
-    val link: String,
     val title: String,
-    val pubDate: String,
-    val description: String,
-    val thumbnail: String
-)
+    @SerializedName("top_image")
+    val topImage: String,
+    val videos: List<String>,
+    val url: String,
+    val date: String,
+    @SerializedName("short_description")
+    val shortDescription: String,
+    val text: String,
+    val publisher: Publisher
+) : Parcelable
+
+@Parcelize
+data class Publisher(
+    val href: String,
+    val title: String
+) : Parcelable

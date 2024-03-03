@@ -12,6 +12,7 @@ import com.yanuar.barita.ui.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    var selectedFragment: Fragment = HomeFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,15 +20,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.id_frame_layout, selectedFragment)
+            .commit()
         binding.idNavBottom.setOnItemSelectedListener {
             item ->
-            var selectedFragment: Fragment? = null
             when (item.itemId) {
                 R.id.navigation_home -> {
                     Log.d("TAG","select nav home")
                     selectedFragment = HomeFragment()
                 }
-                R.id.navigation_about -> {
+                R.id.about_page -> {
 
                     Log.d("TAG","select nav about")
                     selectedFragment = AboutFragment()

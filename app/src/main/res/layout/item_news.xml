@@ -12,11 +12,9 @@ xmlns:tools="http://schemas.android.com/tools">
     android:layout_margin="8dp"
     app:strokeColor="@color/material_on_surface_stroke"
     app:strokeWidth="1dp">
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         >
 
         <TextView
@@ -24,15 +22,17 @@ xmlns:tools="http://schemas.android.com/tools">
 
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/size_header_item_berita"
-            android:textStyle="bold"
-            android:textColor="@color/soft_black"
             android:paddingStart="10dp"
             android:paddingTop="10dp"
+            android:layout_marginRight="10dp"
+
+            android:textColor="@color/soft_black"
+            android:textSize="@dimen/size_header_item_berita"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/id_img_berita"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Judul berita" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/id_content_berita"
@@ -40,11 +40,12 @@ xmlns:tools="http://schemas.android.com/tools">
             android:layout_height="wrap_content"
             android:textSize="@dimen/size_description_item_berita"
             android:textColor="@color/light_grey"
+            android:layout_marginRight="10dp"
             app:layout_constraintEnd_toStartOf="@+id/id_img_berita"
             app:layout_constraintStart_toStartOf="@+id/id_tv_judul_berita"
             app:layout_constraintTop_toBottomOf="@+id/id_tv_judul_berita"
             tools:text="Partai Golkar membuka pintu lebar-lebar kepada Presiden Jokowi gabung..."
-            android:maxLength="76"
+            android:maxLength="90"
             android:ellipsize="end"
             android:paddingStart="10dp"
 
@@ -56,10 +57,11 @@ xmlns:tools="http://schemas.android.com/tools">
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:paddingStart="10dp"
-            android:paddingBottom="5dp"
+            android:paddingBottom="10dp"
             android:textColor="@color/light_grey"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/id_content_berita"
             app:layout_constraintVertical_bias="1.0"
@@ -67,7 +69,7 @@ xmlns:tools="http://schemas.android.com/tools">
 
         <ImageView
             android:id="@+id/id_img_berita"
-            android:layout_width="100dp"
+            android:layout_width="140dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"

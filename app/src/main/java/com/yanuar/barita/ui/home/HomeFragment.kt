@@ -14,8 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.yanuar.barita.R
 import com.yanuar.barita.adapters.NewsCategoryAdapter
 import com.yanuar.barita.databinding.FragmentHomeBinding
+import com.yanuar.barita.helper.UserPreferences
+import com.yanuar.barita.models.News
+import com.yanuar.barita.network.NewsRequest
 import com.yanuar.barita.network.RetrofitInstance
-import com.yanuar.barita.ui.viewmodel.NewsViewModel
+import com.yanuar.barita.repository.NewsRepository
 import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
@@ -28,11 +31,10 @@ private const val ARG_PARAM2 = "param2"
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class HomeFragment : Fragment()  {
+class HomeFragment : Fragment() , NewsAdapter.OnImageLoadErrorListener  {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -42,60 +44,40 @@ class HomeFragment : Fragment()  {
     }
     private var  _binding: FragmentHomeBinding? = null
     private val binding get()= _binding
-    private lateinit var viewModel: NewsViewModel
     private lateinit var newsAdapter: NewsAdapter
+    private lateinit var newsRepository: NewsRepository
+    private var news: MutableList<News> = mutableListOf()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
          _binding = FragmentHomeBinding.inflate(inflater,container,false)
-        // Inflate the layout for this fragment
-       binding?.idRecCategoryNews?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        val categories = listOf("Berita", "Olahraga", "Teknologi", "Hiburan") // Contoh kategori
         binding?.idRecItemNews?.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
-        val adapter = NewsCategoryAdapter(categories){item->
-            onListItemClick(item)
-        }
-        binding?.idRecCategoryNews?.adapter = adapter
-
+        newsRepository = NewsRepository(requireActivity())
         return binding?.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        fetchNews()
+        loadNews(1)
     }
     private fun setupRecyclerView() {
-        newsAdapter = NewsAdapter(listOf()){}
+        val userPreferences = UserPreferences(requireContext())
+        newsAdapter = NewsAdapter(news, { newsTitle ->
+            userPreferences.incrementBeritaDibaca()
+
+        }, this)
         binding?.idRecItemNews?.layoutManager = LinearLayoutManager(context)
         binding?.idRecItemNews?.adapter = newsAdapter
     }
-
-    private fun fetchNews() {
-        lifecycleScope.launch {
-            try {
-                val newsResponse = RetrofitInstance.api.getLatestNews()
-                Log.d("response", newsResponse.message.toString());
-                if (newsResponse.success) {
-                    newsAdapter.updateNews(newsResponse.data.posts)
-                } else {
-                }
-            } catch (e: Exception) {
-                // Handle any errors that occur during the network request
-            }
-        }
+    private fun loadNews(page: Int) {
+         news = newsRepository.getNews(page)
+        newsAdapter.updateNews(news)
     }
-
-    fun onListItemClick( item: String) =
-        Toast.makeText(context, "Clicked $item", Toast.LENGTH_SHORT).show()
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -116,4 +98,9 @@ class HomeFragment : Fragment()  {
             }
     }
 
+    override fun onImageLoadError(position: Int) {
+        // Remove the item from the list
+        news.removeAt(position)
+        // Notify the adapter of the item removal
+        newsAdapter.notifyItemRemoved(position)    }
 }

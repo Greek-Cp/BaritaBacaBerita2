@@ -1,12 +1,16 @@
 package com.yanuar.barita.ui.about
 
+import NewsAdapter
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yanuar.barita.R
 import com.yanuar.barita.databinding.FragmentAboutBinding
+import com.yanuar.barita.helper.UserPreferences
+import com.yanuar.barita.repository.NewsRepository
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,11 +22,11 @@ private const val ARG_PARAM2 = "param2"
  * Use the [AboutFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AboutFragment : Fragment() {
+class AboutFragment : Fragment() , NewsAdapter.OnImageLoadErrorListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private lateinit var newsAdapter: NewsAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -40,6 +44,29 @@ class AboutFragment : Fragment() {
         _binding = FragmentAboutBinding.inflate(inflater,container,false)
 
         return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val userPreferences = UserPreferences(requireContext())
+        val user = userPreferences.getUser()
+        binding?.idTvJumlahDibaca?.text = user.beritaDibaca.toString()
+        binding?.idTvJumlahBeritaDibagikan?.text = user.beritaDibagikan.toString()
+        setupRecyclerView()
+    }
+    private fun setupRecyclerView() {
+        val userPreferences = UserPreferences(requireContext())
+        binding?.idRecDisimpan?.layoutManager = LinearLayoutManager(activity,
+            LinearLayoutManager.VERTICAL,false)
+
+        newsAdapter = NewsAdapter(userPreferences.getUser().listBeritaDisimpan, { newsTitle ->
+            userPreferences.incrementBeritaDibaca()
+
+        }, this)
+
+
+        binding?.idRecDisimpan?.layoutManager = LinearLayoutManager(context)
+        binding?.idRecDisimpan?.adapter = newsAdapter
     }
     override fun onDestroyView() {
         super.onDestroyView()
@@ -65,4 +92,8 @@ class AboutFragment : Fragment() {
                 }
             }
     }
+
+    override fun onImageLoadError(position: Int) {
+ }
+
 }

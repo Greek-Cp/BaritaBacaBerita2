@@ -14,24 +14,19 @@
         app:layout_constraintBaseline_toTopOf="parent"
         >
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Barita Baca Berita"
+            android:fontFamily="@font/made_voyager_regular"
+            android:textAlignment="center"
             android:minHeight="?attr/actionBarSize"
             app:titleCentered="true"
             app:title="@string/title_app"
-            app:menu="@menu/menu_app_bar"
+            android:textSize="30sp"
+
             />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/id_rec_category_news"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:itemCount="10"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_news_category"
-            />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/id_rec_item_news"
             android:layout_width="match_parent"
@@ -40,6 +35,7 @@
             tools:itemCount="10"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_news"
+            android:layout_marginBottom="80dp"
             />
 
     </com.google.android.material.appbar.AppBarLayout>

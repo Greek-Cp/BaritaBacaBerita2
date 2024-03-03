@@ -1,5 +1,7 @@
 <resources>
       <dimen name="fab_margin">16dp</dimen>
-    <dimen name="size_header_item_berita">16sp</dimen>
-    <dimen name="size_description_item_berita">10sp</dimen>
+    <dimen name="size_header_item_berita">17sp</dimen>
+    <dimen name="size_description_item_berita">15sp</dimen>
+    <dimen name="desc_type">10sp</dimen>
+    <dimen name="size_text_baca_berita">18sp</dimen>
 </resources>
